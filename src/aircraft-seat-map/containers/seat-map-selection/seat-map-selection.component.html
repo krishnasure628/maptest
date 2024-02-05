@@ -1,0 +1,95 @@
+<div class="container" *ngIf="flights$ | async as flights; else progressBar">
+  <div class="content">
+    <div class="seat-selection-wrapper">
+      <div *ngFor="let flightNumber of flights.allIds" class="group">
+        <p class="flight">
+          {{ flights.byId[flightNumber].flightInfo.departure.code }} -
+          {{ flights.byId[flightNumber].flightInfo.arrival.code }}
+        </p>
+
+        <ng-container *ngFor="let passengerId of flights.byId[flightNumber].passengers.allIds">
+          <a
+            class="passenger"
+            title="Select Passenger"
+            (click)="selectPassenger(flightNumber, passengerId)"
+            [ngClass]="{
+              active:
+                currentSelection.flightNumber === flights.byId[flightNumber].flightInfo.flightNumber &&
+                currentSelectionPassengerId === flights.byId[flightNumber].passengers.byId[passengerId].id,
+              'condensed-item': flights.allIds.length * flights.byId[flightNumber].passengers.allIds.length > 10
+            }"
+          >
+            <ng-container *ngIf="flights.byId[flightNumber].passengers.byId[passengerId] as passenger">
+              {{ passenger.firstName }}
+              {{ passenger.lastName }}:
+              <ng-container *ngIf="passenger.seatRowNumber && passenger.seatCode">
+                {{ passenger.seatRowNumber }}{{ passenger.seatCode }}
+              </ng-container>
+            </ng-container>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+    <div class="seat-map-wrapper">
+      <app-seat-map
+        [flightNumber]="currentSelection.flightNumber"
+        [passengerId]="currentSelection.passengerId"
+        [passengers]="flights.byId[currentSelection.flightNumber]?.passengers"
+        [seatMap]="flights.byId[currentSelection.flightNumber]?.seatMap"
+        (seatSelect)="onSeatSelection($event)"
+      ></app-seat-map>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="legend-outer-wrapper">
+      <div class="legend-inner-wrapper">
+        <div class="legend">
+          <div class="info-box available"></div>
+          <span class="label">Available</span>
+        </div>
+        <div class="legend">
+          <div class="info-box unavailable"></div>
+          <span class="label">Unavailable</span>
+        </div>
+        <div class="legend">
+          <div class="info-box occupied"></div>
+          <span class="label">Occupied</span>
+        </div>
+      </div>
+    </div>
+    <div class="cta-outer-wrapper">
+      <div class="cta-inner-wrapper">
+        <div class="item">
+          <p class="label-total-price">
+            Total price:
+            <ng-container *ngIf="flights.totalPrice; else defaultZero">
+              {{ flights.totalPrice.total | number: '1.2-2' }}
+              {{ flights.totalPrice.currencyCode }}
+            </ng-container>
+            <ng-template #defaultZero>0.00</ng-template>
+          </p>
+        </div>
+        <div class="item">
+          <button class="btn-cancel" mat-stroked-button title="Cancel Seats Selection" (click)="cancelSeatsSelection()">Cancel</button>
+          <button
+            class="btn-confirm"
+            mat-flat-button
+            color="accent"
+            [routerLink]="parentPage"
+            title="Confirm Seats Selection"
+            [queryParams]="queryParams"
+            [disabled]="!isSeatSelectionValid"
+          >
+            Confirm Seating
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #progressBar>
+  <div class="progress-bar-wrapper">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-template>

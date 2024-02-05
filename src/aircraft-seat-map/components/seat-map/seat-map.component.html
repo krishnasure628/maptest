@@ -1,0 +1,42 @@
+<div class="aircraft" *ngIf="flightNumber && passengerId">
+  <div class="cabins-wrapper">
+    <div class="cabin">
+      <div *ngFor="let row of seatMapMatrix" class="row">
+        <ng-container *ngFor="let rowItem of row">
+          <div class="aisle" *ngIf="rowItem.type === RowItemType.Aisle; else seatTemplate"></div>
+          <ng-template #seatTemplate>
+            <div
+              class="seat-wrapper"
+              [ngClass]="{
+                'extra-legroom': rowItem.characteristics.includes(SeatCharacteristic.LegSpaceSeat),
+                'emergency-exit-row': rowItem.characteristics.includes(SeatCharacteristic.ExitRowSeat)
+              }"
+            >
+              <div
+                class="seat"
+                [ngClass]="{
+                  selected: rowItem.selected,
+                  available: rowItem.availability === SeatAvailability.Available,
+                  unavailable:
+                    rowItem.availability === SeatAvailability.Unavailable ||
+                    rowItem.availability === SeatAvailability.Unknown ||
+                    rowItem.availability === SeatAvailability.NotAvailable ||
+                    !rowItem.availability,
+                  occupied: rowItem.availability === SeatAvailability.Occupied
+                }"
+                [matTooltip]="getTooltip(rowItem)"
+                [matTooltipDisabled]="rowItem.availability !== SeatAvailability.Available"
+                matTooltipTouchGestures="off"
+                (click)="selectSeat(rowItem)"
+              >
+                <div class="seat-number">
+                  <div>{{ rowItem.rowNumber }}{{ rowItem.code }}</div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

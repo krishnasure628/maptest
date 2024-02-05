@@ -1,0 +1,115 @@
+/**
+ * TODO: This will be used after integration with DIB API
+ */
+
+export interface FlightsSeatMapApiResponse {
+  conversationId: string; // mandatory (for booking itself)
+  items: FlightItem[];
+}
+
+export interface FlightItem {
+  flightInfo: FlightInfo;
+  passengers: FlightPassenger[];
+  seatMap: SeatMap;
+}
+
+export interface FlightInfo {
+  departure: Departure;
+  arrival: Arrival;
+  marketingCarrier: string;
+  flightNumber: string;
+}
+
+export interface Departure {
+  code: string;
+  terminalInformation?: string;
+  time: string;
+}
+
+export interface Arrival {
+  code: string;
+  terminalInformation?: string;
+  time: string;
+}
+
+export interface FlightPassenger {
+  email: string; // email is a unique field (mandatory)
+  id: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  title: string;
+  type: string;
+  dateOfBirth?: string; // YYYY-MM-DD
+}
+
+export interface SeatMap {
+  cabins: Cabin[];
+}
+
+export interface Cabin {
+  type: CabinType;
+  deck: CabinDeck;
+  rows: Row[];
+}
+
+export type CabinType = 'ECONOMY' | 'PREMIUM_ECONOMY' | 'BUSINESS' | 'FIRST' | 'UNKNOWN';
+
+export type CabinDeck = 'MAIN' | 'UPPER' | 'LOWER';
+
+export interface Row {
+  number: string;
+  items: RowItem[];
+  tags?: RowTag[];
+}
+
+export interface RowItem {
+  type: RowItemType;
+  code: string; // mandatory
+  rowNumber: string;
+  availability: RowSeatAvailability; // mandatory
+  characteristics: RowSeatCharacteristic[];
+  offers: Offer[]; // mandatory
+}
+
+export type RowItemType = 'SEAT' | 'AISLE' | 'LAVATORY' | 'UNKNOWN';
+
+export enum RowItemTypeEnum {
+  Seat = 'SEAT',
+  Aisle = 'AISLE',
+  Lavatory = 'LAVATORY',
+  Unknown = 'UNKNOWN',
+}
+
+export type RowSeatAvailability = 'AVAILABLE' | 'UNAVAILABLE' | 'OCCUPIED' | 'UNKNOWN';
+
+export enum RowSeatAvailabilityEnum {
+  Available = 'AVAILABLE',
+  Unavailable = 'UNAVAILABLE',
+  Occupied = 'OCCUPIED',
+  Unknown = 'UNKNOWN',
+}
+
+export type RowSeatCharacteristic = 'BULKHEAD' | 'EXTRA_LEG_ROOM' | 'EXIT_ROW' | 'OVERWING';
+
+export enum RowSeatCharacteristicEnum {
+  BulkheadSeat = 'BULKHEAD',
+  ExitRowSeat = 'EXIT_ROW',
+  LegSpaceSeat = 'EXTRA_LEG_ROOM',
+  OverwingSeat = 'OVERWING',
+}
+
+export interface Offer {
+  rateKey: string;
+  passengerId: string;
+  price: Price;
+}
+
+export interface Price {
+  baseFare: number;
+  tax: number;
+  total: number;
+  currencyCode: string;
+}
+
+export type RowTag = 'EXIT' | 'WING' | 'BULKHEAD';

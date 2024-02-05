@@ -1,0 +1,72 @@
+@import '~src/app/styles/variables';
+
+@import 'box-cross';
+
+@mixin seat-base($size, $radius) {
+  width: $size;
+  height: $size;
+  border: 1px solid $color-text-lightest;
+  background-color: $color-white;
+  border-radius: $radius;
+  box-sizing: border-box;
+}
+
+@mixin seat-variants($size) {
+  &.selected {
+    border-color: $color-secondary;
+    background-color: $color-secondary;
+
+    > div {
+      color: $color-white;
+    }
+  }
+
+  &.available {
+    border-color: $color-secondary;
+
+    &:not(.info-box) {
+      cursor: pointer;
+    }
+
+    &:hover:not(.selected, .info-box) {
+      background-color: $color-secondary;
+
+      .seat-number {
+        color: $color-white;
+      }
+    }
+  }
+
+  &.unavailable {
+    border-color: $color-text-lightest;
+    background-color: $light-bg;
+
+    &::before,
+    &::after {
+      background-color: $color-text-lightest;
+    }
+  }
+
+  &.occupied {
+    border-color: $color-secondary;
+    background-color: $color-bg-blue-light;
+
+    &::before,
+    &::after {
+      background-color: $color-secondary;
+    }
+  }
+
+  &.unavailable,
+  &.occupied {
+    @include box-cross($size);
+
+    &:not(.info-box) {
+      cursor: not-allowed;
+    }
+
+    .seat-number {
+      display: none;
+    }
+  }
+}

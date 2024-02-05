@@ -1,0 +1,43 @@
+@import '~src/app/styles/variables';
+
+@import '~src/aircraft-seat-map/shared/styles/variables';
+
+// above gradient on element
+%above-gradient {
+  &::after {
+    content: '';
+    position: absolute;
+    top: -($seat-map-gradient-height-xs);
+    left: $outer-spacing-xs;
+    width: calc(100% - #{$outer-spacing-xs} - #{$outer-spacing-xs});
+    height: $seat-map-gradient-height-xs;
+    background: linear-gradient(180deg, rgba(#ffffff, 0) 0%, #ffffff 100%);
+    pointer-events: none;
+
+    @media only screen and (min-width: $seat-map-breakpoint-sm) {
+      top: -($seat-map-gradient-height-sm);
+      left: $outer-spacing-sm;
+      width: calc(100% - #{$outer-spacing-sm} - #{$outer-spacing-sm});
+      height: $seat-map-gradient-height-sm;
+    }
+
+    @media only screen and (min-width: $seat-map-breakpoint-md) {
+      top: -($seat-map-gradient-height-md);
+      left: $sidebar-width + $seat-spacing-md + $inner-spacing-md;
+      width: $seat-map-width-md;
+      height: $seat-map-gradient-height-md;
+    }
+  }
+}
+
+%passenger-button {
+  display: block;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    border-radius: 4px;
+    background-color: $color-bg-green-light;
+  }
+}

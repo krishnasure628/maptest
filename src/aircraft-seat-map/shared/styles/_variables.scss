@@ -1,0 +1,61 @@
+// Outer Spacing
+$outer-spacing-xs: 16px;
+$outer-spacing-sm: 28px;
+$outer-spacing-md: 28px;
+
+// Inner Spacing
+$inner-spacing-md: 32px;
+
+// Seat Size
+$seat-size-xs: 28px;
+$seat-size-sm: 42px;
+$seat-size-md: 42px;
+
+// Seat Radius
+$seat-radius-xs: 8px;
+$seat-radius-sm: 14px;
+$seat-radius-md: 14px;
+
+// Seat Spacing
+$seat-spacing-xs: 2px;
+$seat-spacing-sm: 8px;
+$seat-spacing-md: 8px;
+
+// Legroom Regular
+$legroom-regular-xs: 12px;
+$legroom-regular-sm: 18px;
+$legroom-regular-md: 18px;
+
+// Legroom Extra
+$legroom-extra-xs: 24px;
+$legroom-extra-sm: 36px;
+$legroom-extra-md: 36px;
+
+// Aisle Size
+$aisle-size-xs: 6px;
+$aisle-size-sm: 16px;
+$aisle-size-md: 16px;
+
+// Sidebar
+$sidebar-width: 300px;
+
+// Seat Map Width (max layout: 3+4+3)
+$seat-map-width-xs: $seat-spacing-xs + 2 * ($aisle-size-xs + $seat-spacing-xs) + 10 * ($seat-size-xs + $seat-spacing-xs);
+$seat-map-width-sm: $seat-spacing-sm + 2 * ($aisle-size-sm + $seat-spacing-sm) + 10 * ($seat-size-sm + $seat-spacing-sm);
+$seat-map-width-md: $seat-spacing-md + 2 * ($aisle-size-md + $seat-spacing-md) + 10 * ($seat-size-md + $seat-spacing-md);
+
+// Seat Map Gradient Height
+$seat-map-gradient-height-xs: $seat-size-xs + ($legroom-regular-xs / 2);
+$seat-map-gradient-height-sm: $seat-size-sm + ($legroom-regular-sm / 2);
+$seat-map-gradient-height-md: $seat-size-md + ($legroom-regular-md / 2);
+
+// Seat Map Breakpoint
+$seat-map-breakpoint-xs: 360px;
+$seat-map-breakpoint-sm: $outer-spacing-sm + $seat-map-width-sm + $outer-spacing-sm; // 612px
+$seat-map-breakpoint-md: ($seat-spacing-md + $sidebar-width + $inner-spacing-md) +
+  ($seat-map-width-md + $outer-spacing-md); // 924px
+
+// Footer Height
+$footer-height-xs: 146px;
+$footer-height-sm: 146px;
+$footer-height-md: 120px;

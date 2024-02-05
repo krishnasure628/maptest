@@ -1,0 +1,21 @@
+@import '~src/app/styles/variables';
+
+// text below "seat selection" label, seat number, legend
+%label-default {
+  color: $color-text-light;
+  font-family: $primary-font;
+  font-size: $font-size-m;
+  letter-spacing: 0;
+  line-height: $line-height-l;
+}
+
+// total price (both places)
+%label-price {
+  color: $color-text-dark;
+  font-family: $secondary-font;
+  font-weight: 700;
+  font-size: $font-size-xl;
+  letter-spacing: 0;
+  line-height: $line-height-xl;
+  margin: 0 0 16px;
+}
